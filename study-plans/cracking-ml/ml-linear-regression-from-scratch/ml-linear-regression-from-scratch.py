@@ -18,6 +18,6 @@ def linear_regression(X, y, lr, epochs):
         w -= lr * dw
         b -= lr * db 
 
-    weight = [v for v in w]
-    bias = b 
+    weight = [float(round(v,4)) for v in w]
+    bias = float(round(b, 4)) 
     return (weight, bias)

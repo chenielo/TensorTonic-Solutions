@@ -42,7 +42,7 @@ def gbr_predict(X_train, y_train, X_test, n_estimators=10, max_depth=3, learning
 
 
     def build_tree(X, y, depth):
-        if depth >= max_depth or len(y)< or len(np.unique(y)) == 1:
+        if depth >= max_depth or len(y)<2 or len(np.unique(y)) == 1:
             classes, counts = np.unique(y, return_counts = True)
             return {'leaf': True, 'label': float(np.mean(y))}
         feat, thres, gain = best_split(X,y)

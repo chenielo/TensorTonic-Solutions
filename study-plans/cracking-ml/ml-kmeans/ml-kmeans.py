@@ -8,23 +8,22 @@ def kmeans(X: list, k: int, max_iters: int = 100, seed: int = 42) -> tuple:
     rng = np.random.RandomState(seed)
     indices = rng.choice(X.shape[0], size=k, replace=False)
     centroids = X[indices].copy()
-    D = np.zeros((X.shape[0], k))
     for _ in range(max_iters):
-        for i in range(X.shape[0]):
-            for j in range(k):
-                diff = X[i] - centroids[j]
-                D[i, j] = np.sum(diff**2)
-    
-        labels = np.argmin(D,axis=1)
-    
-        for j in range(k):
-            points = X[labels == j]
+        # (N, 1, D) - (1, K, D) -> (N, K, D)
+        distance = ((X[:, None, :] - centroids[None, :, :])**2).sum(axis=2)        
+        labels = np.argmin(distance, axis=1)
+        new_centroids = centroids.copy()
+        for cluster in range(k):
+            points = X[labels == cluster]
             if len(points) > 0:
-                centroids[j] = points.mean(axis=0)
-    for i in range(X.shape[0]):
-        for j in range(k):
-            diff = X[i] - centroids[j]
-            D[i, j] = np.sum(diff**2)
-
-    labels = np.argmin(D,axis=1)            
+                new_centroids[cluster] = np.mean(points, axis=0)
+            converged = np.array_equal(new_centroids, centroids)
+            # if converged:
+            #     centroids = new_centroids
+            #     break 
+            centroids = new_centroids
+                
+    distance = ((X[:, None, :] - centroids[None, :, :])**2).sum(axis=2)
+    labels = np.argmin(distance, axis=1)
     return [labels.tolist(), np.round(centroids, 4).tolist()]
+        

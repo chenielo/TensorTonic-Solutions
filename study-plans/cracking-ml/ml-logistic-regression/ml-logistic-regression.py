@@ -1,9 +1,16 @@
 import numpy as np
+from sklearn.linear_model import LogisticRegression
+ 
 
 def logistic_regression(X: list, y: list, lr: float, n_iters: int) -> tuple:
     """
     Returns the fitted weight list and bias.
     """
+    # model = LogisticRegression(max_iter=n_iters)
+    # model.fit(X, y)
+    # w = model.coef_[0]
+    # b = model.intercept_[0]
+    
     X = np.asarray(X, dtype=np.float64)
     y = np.asarray(y, dtype=int)
     w = np.zeros(X.shape[1], dtype=np.float64)

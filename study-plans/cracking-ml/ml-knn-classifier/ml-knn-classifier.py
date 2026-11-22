@@ -1,20 +1,23 @@
 import numpy as np
-from collections import Counter 
-def knn_classify(X_train, y_train, X_test, k=3):
+from sklearn.neighbors import KNeighborsClassifier
+
+def knn_classifier(X_train: list, y_train: list, X_test: list, k: int) -> list:
     """
-    Returns: A list of predicted integer labels for each test point
+    Returns one predicted label for each test row.
     """
-    X_train = np.asarray(X_train, dtype=float)
-    y_train = np.asarray(y_train, dtype=float)
-    X_test = np.asarray(X_test, dtype=float)
-    predictions = []
-    for x in X_test:
-        dists = np.sqrt(np.sum((X_train - x)**2,axis=1))
-        nearest_idx = np.argsort(dists)[:k]
-        nearest_labels = y_train[nearest_idx]
-        counts = Counter(nearest_labels.tolist())
-        max_count = max(counts.values())
-        best_label = min(label for label, c in counts.items() if c == max_count) 
-        predictions.append(best_label)
+    clf = KNeighborsClassifier(n_neighbors = k)
+    clf.fit(X_train,y_train)
+    predictions = clf.predict(X_test).tolist()
+    # X_train = np.asarray(X_train, dtype=float)
+    # y_train = np.asarray(y_train, dtype=int)
+    # X_test = np.asarray(X_test, dtype=float)
+    # predictions =[]
+    # for point in X_test:
+
+    #     order = sorted(range(len(X_train)), key=lambda index: (float(np.sum((X_train[index] - point) ** 2)), index))        
+    #     counts = {}
+    #     for index in order[:k]:
+    #         label = y_train[index]
+    #         counts[label] = counts.get(label, 0)+1
+    #     predictions.append(int(min(counts, key=lambda label: (-counts[label], label))))
     return predictions
-        

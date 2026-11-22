@@ -73,7 +73,7 @@ $$
 | Loss | Negative Gradient | Use Case |
 |---|---|---|
 | Squared $\frac{1}{2}(y-F)^2$ | $y - F$ | Regression |
-| Absolute $|y-F|$ | $\text{sign}(y-F)$ | Robust regression |
+| Absolute $\lvert y-F\rvert$ | $\text{sign}(y-F)$ | Robust regression |
 | Log loss | $y - \sigma(F)$ | Classification |
 
 ---

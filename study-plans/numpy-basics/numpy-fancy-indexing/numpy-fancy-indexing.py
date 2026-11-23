@@ -1,11 +1,8 @@
 import numpy as np
 
-def select_by_index(arr, indices, axis):
+def select_by_index(arr: list, indices: list, axis: int) -> np.ndarray:
     """
-    Returns: 2D ndarray of float64
+    Returns a 2D float64 array of the selected rows or columns.
     """
-    arr = np.array(arr, dtype=np.float64)
-    if axis == 0:
-        return arr[indices,:]
-    else:
-        return arr[:,indices]
+    arr = np.asarray(arr, dtype=float)
+    return arr[:, indices] if axis == 1 else arr[indices, :]

@@ -94,7 +94,7 @@ a[[1, 1, 1]] = [10, 20, 30]   # duplicate index: last value wins (30)
 <span style="font-size: 14px;">For duplicate indices, use `np.add.at()` for accumulation instead of assignment:</span>
 
 ```python
-np.add.at(a, [1, 1, 1], [10, 20, 30])  # a[1] becomes 60 (accumulated)
+np.add.at(a, [1, 1, 1], [10, 20, 30])  # a[1] becomes 90 (30 + 10 + 20 + 30)
 ```
 
 ---
@@ -132,4 +132,4 @@ a[order]                    # [10, 20, 30]
 * <span style="font-size: 14px;">**Copy, not view**: Unlike slicing, fancy indexing copies data. Modifying the result does not affect the original.</span>
 * <span style="font-size: 14px;">**Duplicate index assignment**: `a[[0, 0]] = [1, 2]` sets `a[0] = 2` (last value wins), not `a[0] = 3` (not summed). Use `np.add.at` for accumulation.</span>
 * <span style="font-size: 14px;">**Shape of result**: The result shape matches the index array shape, not the source array shape. `a[np.array([[0,1],[2,3]])]` returns a $(2, 2)$ array.</span>
-* <span style="font-size: 14px;">**Out of bounds**: Indices outside $[0, n)$ raise `IndexError`. Use `np.clip` to clamp indices safely.</span>
+* <span style="font-size: 14px;">**Out of bounds**: For an axis of length n, valid integer indices run from -n through n - 1.</span>

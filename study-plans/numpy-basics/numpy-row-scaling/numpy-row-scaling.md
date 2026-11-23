@@ -23,7 +23,9 @@ result = A * s[:, np.newaxis]
 
 <span style="font-size: 14px;">Without reshaping, $A * s$ tries to broadcast $(2, 3)$ and $(2,)$. NumPy aligns from the right: the last dimensions (3 and 2) do not match and cannot broadcast. By reshaping $s$ to $(2, 1)$, the shapes $(2, 3)$ and $(2, 1)$ are compatible: the 1 broadcasts to 3.</span>
 
-$$\begin{pmatrix} s_0 \\ s_1 \end{pmatrix}_{(2,1)} \odot \begin{pmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \end{pmatrix}_{(2,3)} = \begin{pmatrix} s_0 a_{00} & s_0 a_{01} & s_0 a_{02} \\ s_1 a_{10} & s_1 a_{11} & s_1 a_{12} \end{pmatrix}$$
+$$
+\begin{pmatrix} s_0 \\ s_1 \end{pmatrix}_{(2,1)} \odot \begin{pmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \end{pmatrix}_{(2,3)} = \begin{pmatrix} s_0 a_{00} & s_0 a_{01} & s_0 a_{02} \\ s_1 a_{10} & s_1 a_{11} & s_1 a_{12} \end{pmatrix}
+$$
 
 ---
 
@@ -42,7 +44,9 @@ normalized = A / row_sums
 
 <span style="font-size: 14px;">Row scaling by $s$ is equivalent to left-multiplication by a diagonal matrix:</span>
 
-$$\text{diag}(s) \cdot A$$
+$$
+\text{diag}(s) \cdot A
+$$
 
 ```python
 np.diag(s) @ A  # correct but creates a full (m, m) matrix
@@ -67,4 +71,4 @@ A * s[:, None]   # same result, no temporary matrix
 * <span style="font-size: 14px;">**Forgetting newaxis**: `A * s` fails or broadcasts incorrectly. Always reshape $s$ to $(m, 1)$ with `s[:, None]` or `s[:, np.newaxis]`.</span>
 * <span style="font-size: 14px;">**axis confusion**: Row sums use `axis=1`; column sums use `axis=0`. Mixing these up scales the wrong direction.</span>
 * <span style="font-size: 14px;">**Division by zero**: If any row sum is zero, division produces inf or nan. Check for zero denominators.</span>
-* <span style="font-size: 14px;">**Integer truncation**: Scaling an integer array by a float weight may truncate. Cast to float first.</span>
+* <span style="font-size: 14px;">**Integer truncation**: Ordinary multiplication by floating-point weights produces floating-point output. In-place multiplication into an integer array can fail because of casting rules.</span>

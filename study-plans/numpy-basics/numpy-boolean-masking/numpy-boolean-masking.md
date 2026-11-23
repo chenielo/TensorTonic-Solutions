@@ -1,6 +1,6 @@
 # <span style="font-size: 20px;">Boolean Masking</span>
 
-<span style="font-size: 14px;">Boolean masking is the NumPy technique for selecting elements based on conditions. A boolean mask is an array of True/False values. For plain indexing (`arr[mask]`) the mask must have the same shape as the data; for functions like `np.where(cond, x, y)` and `np.select(conditions, choices)`, the condition broadcasts against `x` and `y` following NumPy's standard broadcasting rules, so a `(n,)` mask can apply to `(m, n)` data. Masking enables element-level filtering, row or column selection, and conditional computation without Python loops.</span>
+<span style="font-size: 14px;">Boolean masking is the NumPy technique for selecting elements based on conditions. A boolean mask is an array of True/False values. For element-wise selection, the boolean mask matches the data shape. A one-dimensional row mask instead matches the row count; for functions like `np.where(cond, x, y)` and `np.select(conditions, choices)`, the condition broadcasts against `x` and `y` following NumPy's standard broadcasting rules, so a `(n,)` mask can apply to `(m, n)` data. Masking enables element-level filtering, row or column selection, and conditional computation without Python loops.</span>
 
 ---
 
@@ -19,7 +19,7 @@ mask = arr > 5
 arr[mask]  # [8, 7, 9, 6] - 1D array of matching elements
 ```
 
-<span style="font-size: 14px;">Boolean indexing on a 2D array always returns a 1D array of the matching elements, regardless of the mask pattern.</span>
+<span style="font-size: 14px;">A full-shape boolean mask selects individual elements into a one-dimensional array. A one-dimensional row mask selects complete rows and keeps the result two-dimensional.</span>
 
 ---
 

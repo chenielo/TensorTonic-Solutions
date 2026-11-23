@@ -1,6 +1,8 @@
 import numpy as np
 
-def pairwise_diff(a):
-    """Returns: np.ndarray of shape (n, n) where out[i,j] = a[i] - a[j]"""
-    a = np.array(a, dtype=np.float64)
-    return a[:, None] - a[None, :]
+def pairwise_diff(a: list) -> np.ndarray:
+    """
+    Returns an (n, n) float64 array of signed pairwise differences.
+    """
+    arr = np.array(a, dtype=np.float64)
+    return arr[:,None]-arr[None,:]

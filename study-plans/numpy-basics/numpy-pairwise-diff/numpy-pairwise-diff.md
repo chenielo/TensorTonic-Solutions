@@ -19,7 +19,9 @@ diff = a[:, None] - a[None, :]
 
 <span style="font-size: 14px;">This produces a $(4, 4)$ matrix:</span>
 
-$$D_{ij} = a_i - a_j$$
+$$
+D_{ij} = a_i - a_j
+$$
 
 ```
 [[ 0, -10, -20, -30],
@@ -41,7 +43,7 @@ $$D_{ij} = a_i - a_j$$
 
 * <span style="font-size: 14px;">**Antisymmetric**: $D_{ij} = -D_{ji}$</span>
 * <span style="font-size: 14px;">**Zero diagonal**: $D_{ii} = 0$</span>
-* <span style="font-size: 14px;">**Rank 1**: The matrix has rank at most 1 (it is an outer product minus its transpose)</span>
+* <span style="font-size: 14px;">**Rank at most 2**: The matrix is the difference of two rank-one outer products.</span>
 
 ---
 
@@ -62,7 +64,7 @@ dist_sq = np.sum(diff**2, axis=2)                  # (n, n)
 dist = np.sqrt(dist_sq)
 ```
 
-<span style="font-size: 14px;">A more numerically stable computation uses the identity $\|a - b\|^2 = \|a\|^2 + \|b\|^2 - 2a^Tb$:</span>
+<span style="font-size: 14px;">An alternative that avoids the three-dimensional difference array uses the identity $\|a - b\|^2 = \|a\|^2 + \|b\|^2 - 2a^Tb$:</span>
 
 ```python
 sq_norms = np.sum(X**2, axis=1)
@@ -71,6 +73,8 @@ dist_sq = np.maximum(dist_sq, 0)  # clamp negative values from floating-point er
 dist = np.sqrt(dist_sq)
 ```
 
+The squared-norm identity can lose precision when large vectors are very close. Clipping negative results does not recover that lost precision.
+
 ---
 
 ## <span style="font-size: 16px;">Applications</span>
@@ -78,7 +82,7 @@ dist = np.sqrt(dist_sq)
 * <span style="font-size: 14px;">**k-NN**: Compute all pairwise distances, then find the k smallest per row</span>
 * <span style="font-size: 14px;">**RBF kernel**: $K_{ij} = \exp(-\gamma \|x_i - x_j\|^2)$ requires pairwise squared distances</span>
 * <span style="font-size: 14px;">**Time series**: Pairwise differences of timestamps give all inter-event intervals</span>
-* <span style="font-size: 14px;">**Sorting verification**: If all pairwise differences $D_{ij}$ with $i < j$ are positive, the array is sorted ascending</span>
+* <span style="font-size: 14px;">**Sorting verification**: If all differences above the diagonal are negative, the array is strictly increasing.</span>
 
 ---
 
@@ -86,9 +90,11 @@ dist = np.sqrt(dist_sq)
 
 <span style="font-size: 14px;">The pairwise difference matrix has $n^2$ elements. For $n = 10{,}000$ float64 values:</span>
 
-$$10{,}000^2 \times 8 \text{ bytes} = 800 \text{ MB}$$
+$$
+10{,}000^2 \times 8 \text{ bytes} = 800 \text{ MB}
+$$
 
-<span style="font-size: 14px;">For large $n$, compute distances in batches or use scipy's `cdist`/`pdist` which store only the upper triangle.</span>
+<span style="font-size: 14px;">For large inputs, compute distances in batches. SciPy pdist returns condensed pairwise distances, while cdist returns a full distance matrix.</span>
 
 ---
 

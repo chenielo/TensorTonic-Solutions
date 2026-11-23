@@ -1,11 +1,8 @@
 import numpy as np
 
-def extract_subarray(arr, row_start, row_stop, col_start, col_stop):
+def extract_subarray(arr: list, row_start: int, row_stop: int, col_start: int, col_stop: int) -> np.ndarray:
     """
-    Returns: 2D ndarray of float64
+    Returns the selected 2D subarray with dtype float64.
     """
-    arr = np.asarray(arr,dtype=np.float64)
-
-
-
-    return arr[row_start:row_stop,col_start:col_stop]
+    arr = np.asarray(arr, dtype=float)
+    return arr[row_start:row_stop, col_start:col_stop]

@@ -1,6 +1,6 @@
 # <span style="font-size: 20px;">Basic Indexing</span>
 
-<span style="font-size: 14px;">NumPy's indexing system lets you extract any rectangular region from an array using slice notation. Understanding how slices, negative indices, and the stop-exclusive convention interact is essential for writing correct data pipeline code. Basic indexing always returns a view of the original array, meaning changes to the view affect the original data.</span>
+<span style="font-size: 14px;">NumPy's indexing system lets you extract any rectangular region from an array using slice notation. Understanding how slices, negative indices, and the stop-exclusive convention interact is essential for writing correct data pipeline code. Array slices return views of the original array, so changes to a slice affect the original data. Indexing a single element returns a scalar.</span>
 
 ---
 
@@ -43,9 +43,7 @@ arr[::-1, :]    # rows in reverse order
 
 ### <span style="font-size: 14px;">Subarray Shape</span>
 
-<span style="font-size: 14px;">The shape of a slice `arr[r0:r1, c0:c1]` is:</span>
-
-$$(\texttt{r1} - \texttt{r0}, \; \texttt{c1} - \texttt{c0})$$
+The slice shape is the number of selected rows and columns after resolving negative bounds and clipping them to the axis lengths.
 
 ---
 

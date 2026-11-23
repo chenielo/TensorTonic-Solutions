@@ -48,7 +48,9 @@ np.maximum.outer(a, b)    # element-wise max: max(a_i, b_j)
 
 <span style="font-size: 14px;">For vectors $a \in \mathbb{R}^m$ and $b \in \mathbb{R}^n$, the outer sum is:</span>
 
-$$S_{ij} = a_i + b_j, \quad i \in [0, m), \; j \in [0, n)$$
+$$
+S_{ij} = a_i + b_j, \quad i \in [0, m), \; j \in [0, n)
+$$
 
 <span style="font-size: 14px;">In matrix form: $S = a \mathbf{1}^T + \mathbf{1} b^T$ where $\mathbf{1}$ is the all-ones vector of appropriate size.</span>
 
@@ -60,7 +62,9 @@ $$S_{ij} = a_i + b_j, \quad i \in [0, m), \; j \in [0, n)$$
 
 <span style="font-size: 14px;">The squared Euclidean distance matrix can be decomposed using outer sums:</span>
 
-$$\|x_i - x_j\|^2 = \|x_i\|^2 + \|x_j\|^2 - 2 x_i^T x_j$$
+$$
+\|x_i - x_j\|^2 = \|x_i\|^2 + \|x_j\|^2 - 2 x_i^T x_j
+$$
 
 ```python
 sq_norms = np.sum(X**2, axis=1)

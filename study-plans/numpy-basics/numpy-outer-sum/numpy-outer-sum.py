@@ -1,7 +1,9 @@
 import numpy as np
 
-def outer_sum(a, b):
-    """Returns: np.ndarray of shape (m, n), outer sum where out[i,j] = a[i] + b[j]"""
-    a = np.array(a, dtype=np.float64)
-    b = np.array(b, dtype=np.float64)
-    return a[:, np.newaxis] + b
+def outer_sum(a: list, b: list) -> np.ndarray:
+    """
+    Returns an (m, n) float64 array of pairwise sums.
+    """
+    a = np.asarray(a, dtype=float)
+    b = np.asarray(b, dtype=float)
+    return a[:, None] + b[None, :]

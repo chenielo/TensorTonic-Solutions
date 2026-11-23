@@ -1,7 +1,9 @@
 import numpy as np
 
-def scale_cols(data, weights):
-    """Returns: np.ndarray of shape (m, n), each column scaled by corresponding weight"""
-    arr = np.array(data, dtype=np.float64)
-    w = np.array(weights, dtype=np.float64)
-    return arr*w
+def scale_cols(data: list, weights: list) -> np.ndarray:
+    """
+    Returns a float64 matrix with each column multiplied by its weight.
+    """
+    data = np.asarray(data, dtype=float)
+    weights = np.asarray(weights, dtype=float)
+    return data*weights[None,:]

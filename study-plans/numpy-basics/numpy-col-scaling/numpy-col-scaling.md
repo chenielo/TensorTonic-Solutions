@@ -18,7 +18,9 @@ result = A * w
 
 <span style="font-size: 14px;">No reshape is needed. NumPy broadcasts the $(3,)$ array along axis 0, multiplying each column by the corresponding weight. This works because broadcasting aligns from the right: shapes $(2, 3)$ and $(3,)$ are compatible.</span>
 
-$$A \odot w = \begin{pmatrix} a_{00} w_0 & a_{01} w_1 & a_{02} w_2 \\ a_{10} w_0 & a_{11} w_1 & a_{12} w_2 \end{pmatrix}$$
+$$
+A \odot w = \begin{pmatrix} a_{00} w_0 & a_{01} w_1 & a_{02} w_2 \\ a_{10} w_0 & a_{11} w_1 & a_{12} w_2 \end{pmatrix}
+$$
 
 ---
 
@@ -26,7 +28,9 @@ $$A \odot w = \begin{pmatrix} a_{00} w_0 & a_{01} w_1 & a_{02} w_2 \\ a_{10} w_0
 
 <span style="font-size: 14px;">Column scaling is equivalent to right-multiplication by a diagonal matrix:</span>
 
-$$A \cdot \text{diag}(w)$$
+$$
+A \cdot \text{diag}(w)
+$$
 
 ```python
 A @ np.diag(w)   # correct but creates full (n, n) matrix

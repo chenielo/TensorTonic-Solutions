@@ -175,5 +175,5 @@ df.groupby('dept', dropna=False)['val'].sum()
 
 * <span style="font-size: 14px;">**Forgetting to select a column**: `df.groupby('dept').mean()` aggregates ALL numeric columns. Select specific columns to avoid unexpected results.</span>
 * <span style="font-size: 14px;">**count vs size**: `count()` excludes NaN; `size()` includes NaN. For row counts, `size()` is usually what you want.</span>
-* <span style="font-size: 14px;">**MultiIndex columns from agg**: Using `agg(['mean', 'std'])` produces MultiIndex columns. Use named aggregation to get flat columns.</span>
+* <span style="font-size: 14px;">**Aggregation column labels**: Aggregating a selected Series with several functions produces flat function-name columns. Aggregating several DataFrame columns with several functions can produce MultiIndex columns.</span>
 * <span style="font-size: 14px;">**Slow custom functions**: Custom lambda functions in `agg()` are 10-100x slower than built-in methods. Always check if a built-in covers your case first.</span>

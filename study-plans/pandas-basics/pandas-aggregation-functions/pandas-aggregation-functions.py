@@ -1,9 +1,9 @@
 import pandas as pd
 
-def multi_agg(data, group_col, value_col, funcs):
+def multi_agg(data: dict, group_col: str, value_col: str, funcs: list) -> dict:
     """
-    Returns: dict mapping function name to {group: value} dict
+    Returns a dictionary from function names to dictionaries of group aggregates.
     """
     df = pd.DataFrame(data)
     result = df.groupby(group_col)[value_col].agg(funcs)
-    return result.to_dict()
+    return result.to_dict() 

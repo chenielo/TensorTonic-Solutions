@@ -36,7 +36,7 @@ grouped.last()      # last non-null value
 
 ```python
 grouped.agg('mean')          # same as grouped.mean()
-grouped.agg(['mean', 'std']) # multiple functions, MultiIndex columns
+grouped.agg(['mean', 'std']) # multiple functions, flat function-name columns
 ```
 
 ### <span style="font-size: 14px;">Dictionary Specification (Different Functions per Column)</span>
@@ -98,14 +98,14 @@ df.groupby('dept')['salary'].agg(lambda x: (x > 100000).sum())
 df.groupby('dept')['salary'].agg(['mean', 'median', 'std', 'count'])
 ```
 
-<span style="font-size: 14px;">This produces a DataFrame with MultiIndex columns (one level for the column name, one for the aggregation). To flatten:</span>
+<span style="font-size: 14px;">For one selected Series, this produces flat columns named after the functions. To give them more descriptive names:</span>
 
 ```python
 result = df.groupby('dept')['salary'].agg(['mean', 'median', 'std'])
 result.columns = ['salary_mean', 'salary_median', 'salary_std']
 ```
 
-<span style="font-size: 14px;">Or use named aggregation to avoid MultiIndex entirely.</span>
+<span style="font-size: 14px;">Named aggregation is another way to choose explicit output column names.</span>
 
 ---
 
@@ -167,6 +167,6 @@ pd.pivot_table(df, values='salary', index='dept', columns='year', aggfunc='mean'
 ## <span style="font-size: 16px;">Common Pitfalls</span>
 
 * <span style="font-size: 14px;">**Confusing count and size**: `count()` excludes NaN values; `size()` includes them. Use `size()` for row counts.</span>
-* <span style="font-size: 14px;">**MultiIndex columns**: Using `agg(['func1', 'func2'])` creates MultiIndex columns that complicate downstream code. Use named aggregation.</span>
+* <span style="font-size: 14px;">**Aggregation column labels**: Several functions on one selected Series produce flat columns. Several functions on multiple DataFrame columns can produce MultiIndex columns.</span>
 * <span style="font-size: 14px;">**Slow custom functions**: Always check if a built-in method exists before writing a custom function.</span>
 * <span style="font-size: 14px;">**std() with ddof**: By default, `std()` uses `ddof=1` (sample standard deviation). For population standard deviation, pass `ddof=0`.</span>

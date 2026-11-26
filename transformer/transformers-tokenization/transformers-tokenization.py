@@ -12,33 +12,24 @@ class SimpleTokenizer:
         """
         Builds the vocabulary in place.
         """
-        special_tokens = [self.pad_token, self.unk_token, self.bos_token, self.eos_token]
-        for i, token in enumerate(special_tokens):
-            self.word_to_id[token] = i
-            self.id_to_word[i] = token
-
-        uniq_words = set()
+        specials = [self.pad_token, self.unk_token, self.bos_token, self.eos_token]
+        words = set()
         for t in texts:
-            w = t.lower().split()
-            uniq_words.update(w)
-
-        for w in sorted(uniq_words):
-            idx = len(self.word_to_id)
-            self.word_to_id[w] = idx 
-            self.id_to_word[idx] = w 
-            
-        self.vocab_size = len(self.word_to_id)
-
+            words.update(t.lower().split())
+        tokens = specials + sorted(words)
+        self.word_to_id = {token:i for i,token in enumerate(tokens)}
+        self.id_to_word = {i:token for i,token in enumerate(tokens)}
+        self.vocab_size = len(tokens)
+        
     def encode(self, text: str) -> list[int]:
         """
         Returns token IDs for the input text.
         """
-        words = text.lower().split()
         unk_id = self.word_to_id[self.unk_token]
-        return [self.word_to_id.get(w, unk_id) for w in words]
-        
+        return [self.word_to_id.get(t, unk_id) for t in text.lower().split()]
+
     def decode(self, ids: list[int]) -> str:
         """
         Returns the decoded, space-separated text.
         """
-        return " ".join(self.id_to_word.get(idx, self.unk_token) for idx in ids)
+        return ' '.join([self.id_to_word.get(id, self.unk_token) for id in ids])
